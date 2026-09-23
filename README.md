@@ -10,7 +10,7 @@ The **Product Review Sentiment Analysis** project uses Machine Learning to class
 * Predict the sentiment of a review.
 * Learn Natural Language Processing (NLP) and Machine Learning techniques.
 
-## Technologies Used
+## Technologies used
 
 * Python
 * Machine Learning
