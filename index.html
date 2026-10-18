@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flipkart Review Sentiment Analysis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 24px;
+      color: #172033;
+    }
+    .container {
+      max-width: 680px;
+      margin: 40px auto;
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px #00000012;
+    }
+    h1 { color: #1769aa; }
+    p { line-height: 1.6; }
+    textarea {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 150px;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font: inherit;
+      resize: vertical;
+    }
+    button {
+      margin-top: 14px;
+      background: #1769aa;
+      color: white;
+      border: 0;
+      padding: 13px 20px;
+      border-radius: 9px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background: #10558d; }
+    #result {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      display: none;
+      font-weight: bold;
+    }
+    .note { color: #64748b; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>🛍️ Flipkart Review Sentiment Analysis</h1>
+    <p>Enter a product review to estimate whether its wording is positive, negative, or neutral.</p>
+
+    <label for="review"><strong>Product review</strong></label>
+    <textarea id="review" placeholder="Example: Excellent quality and fast delivery!"></textarea>
+
+    <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <div id="result" role="status" aria-live="polite"></div>
+
+    <p class="note">
+      Educational demo: this GitHub Pages version uses word scoring,
+      not the original trained machine-learning model, and may make mistakes.
+      This project is independent and is not affiliated with Flipkart.
+    </p>
+  </main>
+
+  <script>
+    const positiveWords = [
+      "good", "great", "excellent", "amazing", "awesome", "love",
+      "best", "perfect", "wonderful", "happy", "useful", "comfortable",
+      "fast", "quality", "worth", "beautiful", "recommend", "fantastic"
+    ];
+
+    const negativeWords = [
+      "bad", "poor", "terrible", "worst", "hate", "disappointed",
+      "useless", "broken", "defective", "slow", "waste", "damaged",
+      "cheap", "problem", "not good", "not worth", "unhappy", "avoid"
+    ];
+
+    function analyzeSentiment() {
+      const review = document.getElementById("review").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (!review) {
+        result.style.display = "block";
+        result.style.background = "#fef3c7";
+        result.style.color = "#92400e";
+        result.textContent = "Please enter a product review first.";
+        return;
+      }
+
+      let score = 0;
+      positiveWords.forEach(word => {
+        if (review.includes(word)) score++;
+      });
+      negativeWords.forEach(word => {
+        if (review.includes(word)) score--;
+      });
+
+      result.style.display = "block";
+
+      if (score > 0) {
+        result.style.background = "#dcfce7";
+        result.style.color = "#166534";
+        result.textContent = "😊 Estimated sentiment: Positive";
+      } else if (score < 0) {
+        result.style.background = "#fee2e2";
+        result.style.color = "#991b1b";
+        result.textContent = "😞 Estimated sentiment: Negative";
+      } else {
+        result.style.background = "#e2e8f0";
+        result.style.color = "#334155";
+        result.textContent = "😐 Estimated sentiment: Neutral";
+      }
+    }
+  </script>
+</body>
+</html>
